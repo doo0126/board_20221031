@@ -1,12 +1,14 @@
 package com.its.board.dto;
 
-import lombok.*;
-import java.time.LocalDateTime;
-@AllArgsConstructor
+
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 
 public class BoardDTO {
     private String boardWriter="";
