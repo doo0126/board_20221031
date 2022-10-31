@@ -12,6 +12,7 @@
 </head>
 <body>
 <a href="/board/save">글 작성</a>
+<a href="/board/">글 목록</a>
 
 </body>
 </html>

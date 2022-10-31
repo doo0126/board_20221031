@@ -12,13 +12,13 @@
 </head>
 <body>
 
-<form action="/board/save"method="post"></form>
+<form action="/board/save"method="post">
 <input type="text" name="boardWriter"placeholder = "글쓴이">
 <input type = "text" name="boardPass"placeholder ="비밀번호">
 <input type = "text" name="boardTitle"placeholder ="제목">
 <input type ="text" name="boardContents"placeholder="내용">
 <input type="submit" value = "확인">
 
-
+</form>
 </body>
 </html>

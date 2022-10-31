@@ -11,10 +11,14 @@ import lombok.ToString;
 @ToString
 
 public class BoardDTO {
+    private Long boardId;
     private String boardWriter="";
     private String boardPass="";
     private String boardTitle="";
     private String boardContents ="";
+    private String boardCreateDate="";
+    private int boardHits= 0;
+
 
 
 }

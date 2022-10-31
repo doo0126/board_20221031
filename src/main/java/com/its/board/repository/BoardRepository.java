@@ -11,8 +11,14 @@ import java.util.*;
 public class BoardRepository {
 @Autowired
 private SqlSessionTemplate sql;
-    public void save(BoardDTO boardDTO) {
-        sql.insert("board.save",boardDTO);
+    public int save(BoardDTO boardDTO) {
+        System.out.printf("boardDTO:",boardDTO);
+        return sql.insert("board.save",boardDTO);
 
+
+    }
+
+    public List<BoardDTO> boardList() {
+        return sql.selectList("board.List");
     }
 }
