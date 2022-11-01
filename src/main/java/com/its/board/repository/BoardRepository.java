@@ -30,4 +30,9 @@ public BoardDTO findId(long findId){
 public void update(BoardDTO boardDTO){
         sql.update("board.hits",boardDTO);
 }
+
+
+    public void delete(Long boardId) {
+        sql.delete("board.delete",boardId);
+    }
 }

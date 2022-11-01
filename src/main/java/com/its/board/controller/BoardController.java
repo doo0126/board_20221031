@@ -39,4 +39,15 @@ public class BoardController {
            model.addAttribute("result",result);
         return "boardDetail";
     }
+    @GetMapping("/board/check")
+    public String check(@RequestParam("boardId")Long boardId , Model model){
+        BoardDTO boardDTO = boardService.check(boardId);
+        model.addAttribute(boardDTO);
+        return "deleteCheck";
+    }
+    @GetMapping("/board/delete")
+    public String delete(@RequestParam("boardId")Long boardId){
+        boardService.delete(boardId);
+                return "redirect:/board/";
+    }
 }

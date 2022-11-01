@@ -37,4 +37,12 @@ public class BoardService {
 
        return boardRepository.findId(boardId);
     }
+
+    public BoardDTO check(Long boardId) {
+      return  boardRepository.findId(boardId);
+    }
+
+    public void delete(Long boardId) {
+        boardRepository.delete(boardId);
+    }
 }

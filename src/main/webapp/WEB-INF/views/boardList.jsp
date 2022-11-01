@@ -35,16 +35,27 @@
                 <td><a href="/board?boardId=${board.boardId}">${board.boardTitle}</a></td>
                 <td>${board.boardCreateDate}</td>
                 <td>${board.boardHits}</td>
+                <td><button class ="btn btn-danger" onclick="deleteBoard(${board.boardId})">삭제</button></td>
 
 
             </tr>
         </c:forEach>
     </table>
+    <button class="btn btn-danger" onclick="backHome()">처음으로</button>
 
 </div>
+
+</body>
 <script>
+let deleteBoard = (boardId) =>{
+    location.href="/board/check?boardId="+boardId;
+
+}
+const backHome = () =>{
+    location.href="/";
+}
+
 
 </script>
-</body>
 
 </html>
