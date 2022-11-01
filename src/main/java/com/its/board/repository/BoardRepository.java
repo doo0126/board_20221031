@@ -27,7 +27,7 @@ public BoardDTO findId(long findId){
     return   sql.selectOne("board.findId",findId);
 
 }
-public void update(BoardDTO boardDTO){
+public void hitUpdate(BoardDTO boardDTO){
         sql.update("board.hits",boardDTO);
 }
 
@@ -35,4 +35,7 @@ public void update(BoardDTO boardDTO){
     public void delete(Long boardId) {
         sql.delete("board.delete",boardId);
     }
+
+
+
 }

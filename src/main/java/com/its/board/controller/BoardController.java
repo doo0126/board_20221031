@@ -42,12 +42,25 @@ public class BoardController {
     @GetMapping("/board/check")
     public String check(@RequestParam("boardId")Long boardId , Model model){
         BoardDTO boardDTO = boardService.check(boardId);
-        model.addAttribute(boardDTO);
+        model.addAttribute("boardDTO",boardDTO);
         return "deleteCheck";
     }
     @GetMapping("/board/delete")
     public String delete(@RequestParam("boardId")Long boardId){
         boardService.delete(boardId);
                 return "redirect:/board/";
+    }
+    @GetMapping("/board/update")
+    public String updateCheck(@RequestParam("boardId") Long boardId , Model model){
+        BoardDTO boardDTO =boardService.updateCheck(boardId);
+        model.addAttribute("boardDTO",boardDTO);
+        return "boardUpdate";
+    }
+    @PostMapping("/board/update")
+    public String update(@ModelAttribute BoardDTO boardDTO){
+        boardService.update(boardDTO);
+
+
+        return "redirect:/board/";
     }
 }

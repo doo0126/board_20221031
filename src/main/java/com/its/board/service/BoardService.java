@@ -33,7 +33,7 @@ public class BoardService {
       BoardDTO boardDTO =new BoardDTO();
       boardDTO.setBoardId(boardId);
       boardDTO.setBoardHits(boardHits);
-      boardRepository.update(boardDTO);
+      boardRepository.hitUpdate(boardDTO);;
 
        return boardRepository.findId(boardId);
     }
@@ -44,5 +44,15 @@ public class BoardService {
 
     public void delete(Long boardId) {
         boardRepository.delete(boardId);
+    }
+
+    public BoardDTO updateCheck(Long boardId) {
+        return boardRepository.findId(boardId);
+    }
+
+    public void update(BoardDTO boardDTO) {
+         String updateTitle=boardDTO.getBoardTitle();
+         String updateContents=boardDTO.getBoardContents();
+         // if(updateTitle != null &&)
     }
 }

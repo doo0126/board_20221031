@@ -26,6 +26,7 @@
             <th>작성시간</th>
             <th>조회수</th>
             <th>글 삭제</th>
+            <th>글 수정</th>
 
         </tr>
         <c:forEach items="${boardList}" var="board">
@@ -36,7 +37,7 @@
                 <td>${board.boardCreateDate}</td>
                 <td>${board.boardHits}</td>
                 <td><button class ="btn btn-danger" onclick="deleteBoard(${board.boardId})">삭제</button></td>
-
+                <td><button class ="btn btn-danger" onclick="boardUpdate(${board.boardId})">수정</button></td>
 
             </tr>
         </c:forEach>
@@ -48,11 +49,15 @@
 </body>
 <script>
 let deleteBoard = (boardId) =>{
+
     location.href="/board/check?boardId="+boardId;
 
 }
 const backHome = () =>{
     location.href="/";
+}
+let boardUpdate = (boardId) => {
+    location.href="/board/update?boardId="+boardId;
 }
 
 
