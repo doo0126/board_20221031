@@ -11,7 +11,7 @@ public class HomeController {
     }
     @GetMapping("/board/save")
     public String boardSave(){
-        return "boardSave";
+        return "boardPages/boardSave";
     }
 
 }
