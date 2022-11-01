@@ -15,6 +15,7 @@
     <title>detail</title>
 </head>
 <body>
+<jsp:include page="layout/header.jsp" flush="false"></jsp:include>
 <div class="container">
     <table class="table talbe-striped table-hover">
         <tr>

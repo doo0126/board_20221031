@@ -4,6 +4,8 @@ package com.its.board.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -16,7 +18,7 @@ public class BoardDTO {
     private String boardPass="";
     private String boardTitle="";
     private String boardContents ="";
-    private String boardCreateDate="";
+    private LocalDateTime boardCreateDate;
     private int boardHits= 0;
 
 

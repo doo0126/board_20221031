@@ -13,11 +13,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <style>
+        #list{
+            margin-top: 50px;
+        }
+    </style>
     <title>boardList</title>
 </head>
 <body>
-
-<div class="container">
+<jsp:include page="../layout/header.jsp" flush="false"></jsp:include>
+<div class="container" id="list">
     <table class="table talbe-striped table-hover">
         <tr>
 
@@ -54,7 +59,7 @@ let deleteBoard = (boardId) =>{
 
 }
 const backHome = () =>{
-    location.href="/";
+    location.href="../../..";
 }
 let boardUpdate = (boardId) => {
     location.href="/board/update?boardId="+boardId;

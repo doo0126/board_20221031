@@ -11,6 +11,7 @@
     <title>boardUpdate</title>
 </head>
 <body>
+<jsp:include page="layout/header.jsp" flush="false"></jsp:include>
 <div class="container" id="update-form">
 <form action="/board/update" method="post" name="updateForm">
     <input type="text" value="updateTitle" placeholder="수정제목">

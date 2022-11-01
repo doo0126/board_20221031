@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 // @RequestMapping("/board") 공통 묶어냄
 public class BoardController {
@@ -17,7 +15,6 @@ public class BoardController {
 
     @PostMapping("/board/save")
     public String save(@ModelAttribute BoardDTO boardDTO) {
-        System.out.printf("컨트롤러:\n", boardDTO);
        boardService.save(boardDTO);
 
         return "redirect:/board/";
@@ -28,7 +25,7 @@ public class BoardController {
     public String boardList(Model model) {
        model.addAttribute("boardList", boardService.boardList()) ;
 
-        return "boardList";
+        return "boardPages/boardList";
     }
     @GetMapping("/board")
     public String findId(@RequestParam("boardId") Long boardId,Model model){

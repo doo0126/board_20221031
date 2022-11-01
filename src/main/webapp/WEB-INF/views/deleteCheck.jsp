@@ -19,6 +19,7 @@
   <title>deleteCheck</title>
 </head>
 <body>
+<jsp:include page="layout/header.jsp" flush="false"></jsp:include>
 <input type="text" name="passCheck" placeholder="비밀번호입력" id ="passCheck">
 
 <input type="submit" onclick="passCheck()" value="확인">
