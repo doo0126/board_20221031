@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,12 +20,9 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(@ModelAttribute BoardDTO boardDTO) {
         System.out.printf("컨트롤러:\n", boardDTO);
-        boolean result = boardService.save(boardDTO);
-        if (result == true) {
-            return "index";
-        } else {
-            return "false";
-        }
+       boardService.save(boardDTO);
+
+        return "redirect:/board/";
     }
 
 
@@ -33,5 +31,12 @@ public class BoardController {
        model.addAttribute("boardList", boardService.boardList()) ;
 
         return "boardList";
+    }
+    @GetMapping("/board")
+    public String findId(@RequestParam("boardId") Long boardId,Model model){
+        System.out.printf("id:%s\n",boardId);
+         BoardDTO result =boardService.findId(boardId);
+           model.addAttribute("result",result);
+        return "boardDetail";
     }
 }

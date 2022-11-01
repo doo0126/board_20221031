@@ -21,4 +21,13 @@ private SqlSessionTemplate sql;
     public List<BoardDTO> boardList() {
         return sql.selectList("board.List");
     }
+
+public BoardDTO findId(long findId){
+        System.out.printf("리파:%s",findId);
+    return   sql.selectOne("board.findId",findId);
+
+}
+public void update(BoardDTO boardDTO){
+        sql.update("board.hits",boardDTO);
+}
 }

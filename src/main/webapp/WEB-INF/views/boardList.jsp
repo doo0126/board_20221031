@@ -20,28 +20,31 @@
 <div class="container">
     <table class="table talbe-striped table-hover">
         <tr>
-            <th>id</th>
+
             <th>글 쓴이</th>
-            <th>비밀번호</th>
             <th>제목</th>
-            <th>내용</th>
             <th>작성시간</th>
             <th>조회수</th>
+            <th>글 삭제</th>
 
         </tr>
         <c:forEach items="${boardList}" var="board">
             <tr>
-                <td>${board.boardId}</td>
+
                 <td>${board.boardWriter}</td>
-                <td>${board.boardPass}</td>
-                <td>${board.boardTitle}</td>
-                <td>${board.boardContents}</td>
+                <td><a href="/board?boardId=${board.boardId}">${board.boardTitle}</a></td>
                 <td>${board.boardCreateDate}</td>
                 <td>${board.boardHits}</td>
+
+
             </tr>
         </c:forEach>
     </table>
 
 </div>
+<script>
+
+</script>
 </body>
+
 </html>

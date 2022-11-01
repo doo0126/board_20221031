@@ -4,6 +4,7 @@ import com.its.board.dto.BoardDTO;
 import com.its.board.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -23,5 +24,17 @@ public class BoardService {
 
     public List<BoardDTO> boardList() {
         return boardRepository.boardList();
+    }
+
+    public BoardDTO findId(Long boardId) {
+       BoardDTO resultDTO= boardRepository.findId(boardId);
+      int boardHits = resultDTO.getBoardHits();
+      ++boardHits;
+      BoardDTO boardDTO =new BoardDTO();
+      boardDTO.setBoardId(boardId);
+      boardDTO.setBoardHits(boardHits);
+      boardRepository.update(boardDTO);
+
+       return boardRepository.findId(boardId);
     }
 }
