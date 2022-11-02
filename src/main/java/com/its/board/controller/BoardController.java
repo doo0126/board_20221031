@@ -7,55 +7,84 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
-// @RequestMapping("/board") 공통 묶어냄
+@RequestMapping("/board")
 public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @PostMapping("/board/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) {
-       boardService.save(boardDTO);
-
-        return "redirect:/board/";
+    //    @GetMapping("/board/save") // @RequestMapping x
+    @GetMapping("/save")
+    public String saveForm() {
+//        return "boardSave"; // => views/boardSave.jsp (x)
+        return "boardPages/boardSave"; // => views/boardPages/boardSave.jsp
     }
 
+    //    @PostMapping("/board/save") /board/board/save 주소요청에 반응
+//    @PostMapping("/save")
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(@ModelAttribute BoardDTO boardDTO) {
+        boolean result = boardService.save(boardDTO);
+        if (result) {
+            return "redirect:/board/";
+        } else {
+            return "boardPages/saveFail";
+        }
+    }
 
-    @GetMapping("/board/")
-    public String boardList(Model model) {
-       model.addAttribute("boardList", boardService.boardList()) ;
-
+    @GetMapping("/")
+    public String findAll(Model model) {
+        List<BoardDTO> boardDTOList = boardService.findAll();
+        model.addAttribute("boardList", boardDTOList);
         return "boardPages/boardList";
     }
-    @GetMapping("/board")
-    public String findId(@RequestParam("boardId") Long boardId,Model model){
-        System.out.printf("id:%s\n",boardId);
-         BoardDTO result =boardService.findId(boardId);
-           model.addAttribute("result",result);
-        return "boardDetail";
+
+    // 상세조회: /board?id=
+    @GetMapping
+    public String findById(@RequestParam("id") Long id, Model model) {
+        boardService.updateHits(id);
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "boardPages/boardDetail";
     }
-    @GetMapping("/board/check")
-    public String check(@RequestParam("boardId")Long boardId , Model model){
-        BoardDTO boardDTO = boardService.check(boardId);
-        model.addAttribute("boardDTO",boardDTO);
-        return "deleteCheck";
+
+    // 수정화면 요청
+    @GetMapping("/update")
+    public String updateForm(@RequestParam("id") Long id, Model model) {
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "boardPages/boardUpdate";
     }
-    @GetMapping("/board/delete")
-    public String delete(@RequestParam("boardId")Long boardId){
-        boardService.delete(boardId);
-                return "redirect:/board/";
-    }
-    @GetMapping("/board/update")
-    public String updateCheck(@RequestParam("boardId") Long boardId , Model model){
-        BoardDTO boardDTO =boardService.updateCheck(boardId);
-        model.addAttribute("boardDTO",boardDTO);
-        return "boardUpdate";
-    }
-    @PostMapping("/board/update")
-    public String update(@ModelAttribute BoardDTO boardDTO){
+
+    // 수정처리
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
         boardService.update(boardDTO);
+        // 수정 처리 후 상세페이지 출력
+        // redirect로 상세페이지 요청
+//        return "redirect:/board?id=" + boardDTO.getId();
+        // DB에서 가져와서 boardDetail 출력
+        BoardDTO dto = boardService.findById(boardDTO.getId());
+        model.addAttribute("board", dto);
+        return "boardPages/boardDetail";
+    }
+    //삭제 화면 요청
+    @GetMapping("/deleteCheck")
+    public String deleteCheck(@RequestParam("id") Long id , Model model){
+            BoardDTO boardDTO = boardService.findById(id);
+            model.addAttribute("board",boardDTO);
+        return "boardPages/deleteCheck";
+    }
+    //삭제처리
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id")Long id){
 
-
+        boardService.delete(id);
         return "redirect:/board/";
     }
+
 }
+
+

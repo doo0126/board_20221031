@@ -1,26 +1,20 @@
 package com.its.board.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-
-import lombok.*;
-
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
-
 public class BoardDTO {
-    private Long boardId;
-    private String boardWriter="";
-    private String boardPass="";
-    private String boardTitle="";
-    private String boardContents ="";
-    private LocalDateTime boardCreateDate;
-    private int boardHits= 0;
-
-
-
+    private Long id;
+    private String boardWriter;
+    private String boardPass;
+    private String boardTitle;
+    private String boardContents;
+    private Timestamp boardCreatedDate;
+    private int boardHits;
 }

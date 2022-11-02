@@ -4,7 +4,6 @@ import com.its.board.dto.BoardDTO;
 import com.its.board.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -13,46 +12,35 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
     public boolean save(BoardDTO boardDTO) {
-        int result=boardRepository.save(boardDTO);
-        if(result >0){
+        int result = boardRepository.save(boardDTO);
+        if (result > 0) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
+
     }
 
-    public List<BoardDTO> boardList() {
-        return boardRepository.boardList();
+    public List<BoardDTO> findAll() {
+        List<BoardDTO> boardDTOList = boardRepository.findAll();
+        return boardDTOList;
+    }
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
     }
 
-    public BoardDTO findId(Long boardId) {
-       BoardDTO resultDTO= boardRepository.findId(boardId);
-      int boardHits = resultDTO.getBoardHits();
-      ++boardHits;
-      BoardDTO boardDTO =new BoardDTO();
-      boardDTO.setBoardId(boardId);
-      boardDTO.setBoardHits(boardHits);
-      boardRepository.hitUpdate(boardDTO);;
-
-       return boardRepository.findId(boardId);
-    }
-
-    public BoardDTO check(Long boardId) {
-      return  boardRepository.findId(boardId);
-    }
-
-    public void delete(Long boardId) {
-        boardRepository.delete(boardId);
-    }
-
-    public BoardDTO updateCheck(Long boardId) {
-        return boardRepository.findId(boardId);
+    public BoardDTO findById(Long id) {
+        // 조회수 증가
+//        boardRepository.updateHits(id);
+        // 상세내용 가져와서 리턴
+        return boardRepository.findById(id);
     }
 
     public void update(BoardDTO boardDTO) {
-         String updateTitle=boardDTO.getBoardTitle();
-         String updateContents=boardDTO.getBoardContents();
-         // if(updateTitle != null &&)
+        boardRepository.update(boardDTO);
+    }
+
+    public void delete(Long id) {
+        boardRepository.delete(id);
     }
 }

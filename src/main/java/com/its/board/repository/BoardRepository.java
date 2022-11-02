@@ -4,38 +4,33 @@ import com.its.board.dto.BoardDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import java.util.*;
+
+import java.util.List;
 
 @Repository
-
 public class BoardRepository {
-@Autowired
-private SqlSessionTemplate sql;
+    @Autowired
+    private SqlSessionTemplate sql;
     public int save(BoardDTO boardDTO) {
-        System.out.printf("boardDTO:",boardDTO);
-        return sql.insert("board.save",boardDTO);
-
-
+        return sql.insert("Board.save", boardDTO);
     }
 
-    public List<BoardDTO> boardList() {
-        return sql.selectList("board.List");
+    public List<BoardDTO> findAll() {
+        return sql.selectList("Board.findAll");
     }
 
-public BoardDTO findId(long findId){
-        System.out.printf("리파:%s",findId);
-    return   sql.selectOne("board.findId",findId);
-
-}
-public void hitUpdate(BoardDTO boardDTO){
-        sql.update("board.hits",boardDTO);
-}
-
-
-    public void delete(Long boardId) {
-        sql.delete("board.delete",boardId);
+    public void updateHits(Long id) {
+        sql.update("Board.updateHits", id);
     }
 
+    public BoardDTO findById(Long id) {
+        return sql.selectOne("Board.findById", id);
+    }
 
-
+    public void update(BoardDTO boardDTO) {
+        sql.update("Board.update", boardDTO);
+    }
+    public void delete(Long id){
+        sql.delete("Board.delete" ,id);
+    }
 }
