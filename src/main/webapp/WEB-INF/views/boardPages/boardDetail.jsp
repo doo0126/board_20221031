@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>boardDetail.jsp</title>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <style>
         #detail {
@@ -45,6 +46,14 @@
             <th>contents</th>
             <td>${board.boardContents}</td>
         </tr>
+        <c:if test="${board.storedFileName != null}">
+        <tr>
+        <th>file</th>
+        <td>
+            <img src="${pageContext.request.contextPath}/upload/${board.storedFileName}" alt=""width="100" height="100">
+        </td>
+        </tr>
+        </c:if>
     </table>
     <button class="btn btn-primary" onclick="listFn()">목록</button>
     <button class="btn btn-warning" onclick="updateFn()">수정</button>

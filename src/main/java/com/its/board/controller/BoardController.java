@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -25,13 +26,11 @@ public class BoardController {
     //    @PostMapping("/board/save") /board/board/save 주소요청에 반응
 //    @PostMapping("/save")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute BoardDTO boardDTO) {
-        boolean result = boardService.save(boardDTO);
-        if (result) {
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
+         boardService.save(boardDTO);
+
             return "redirect:/board/";
-        } else {
-            return "boardPages/saveFail";
-        }
+
     }
 
     @GetMapping("/")
@@ -47,6 +46,7 @@ public class BoardController {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
+        System.out.println("조회:boardDTO"+boardDTO);
         return "boardPages/boardDetail";
     }
 
@@ -84,6 +84,7 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/";
     }
+
 
 }
 
