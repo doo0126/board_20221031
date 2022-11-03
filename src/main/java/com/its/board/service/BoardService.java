@@ -1,13 +1,16 @@
 package com.its.board.service;
 
+import com.its.board.commons.PagingConst;
 import com.its.board.dto.BoardDTO;
+import com.its.board.dto.PageDTO;
 import com.its.board.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.List;
+import java.util.HashMap;
+import java.util.*;
 
 @Service
 public class BoardService {
@@ -40,8 +43,7 @@ public class BoardService {
             boardDTO.setFileAttached(1);  //파일이 있으면 1 저장
             BoardDTO saveBoard = boardRepository.save(boardDTO); //7 파일 저장 테이블 전달 후 참조키 받아옴
             boardRepository.saveFileName(saveBoard); // 받아온걸 조인 함
-        }
-        else {
+        } else {
             System.out.println("파일 없음");
             boardDTO.setFileAttached(0);
             boardRepository.save(boardDTO);
@@ -79,5 +81,51 @@ public class BoardService {
 
     public void delete(Long id) {
         boardRepository.delete(id);
+    }
+
+    public List<BoardDTO> pagingList(int page) {
+    /*
+    page=1 ,0 뒤에 인덱스처럼 시작 점
+    page=2 3
+    page=3 6
+
+     */
+        int pagingStart = (page - 1) * PagingConst.PAGE_LIMIT; //link 시작 점 0 부터 ~까지
+        Map<String, Integer> pagingParams = new HashMap<>();
+        pagingParams.put("start", pagingStart); //시작점을 맵에 다음
+        pagingParams.put("limit", PagingConst.PAGE_LIMIT); // map을 이용해 값을 2개를 전달  일정한 값 3개씩 이니깐 그 값도 답는다
+        List<BoardDTO> pagingList = boardRepository.pagingList(pagingParams);
+        return pagingList;
+
+
+    }
+
+    public PageDTO pagingParam(int page) {
+        // 전체 글 갯수 조회 해와야함
+        int boardCount =boardRepository.boardCount();
+        //전체 페이지 갯수 계산
+        int maxPage = (int) (Math.ceil((double) boardCount / PagingConst.PAGE_LIMIT)); //실수로 형변환 후 올림
+        //시작 페이지 값 계산(1,4,7,10)
+        int startPage = (((int)(Math.ceil((double) page / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        // 끝 페이지 값 계산(3,6,9,12)
+        int endPage = startPage + PagingConst.BLOCK_LIMIT - 1;
+        if(endPage > maxPage){
+            endPage = maxPage;
+        }
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setPage(page);
+        pageDTO.setMaxPage(maxPage);
+        pageDTO.setStartPage(startPage);
+        pageDTO.setEndPage(endPage);
+        return pageDTO;
+    }
+
+    public List<BoardDTO> search(String type, String q) {
+            Map<String , String> searchParams = new HashMap<>();
+            searchParams.put("type" , type);
+            searchParams.put("q" , q);
+            List<BoardDTO> searchList =boardRepository.search(searchParams);
+
+            return  searchList;
     }
 }

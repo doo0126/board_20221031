@@ -17,6 +17,7 @@ public class BoardDTO {
     private String boardTitle;
     private String boardContents;
     private Timestamp boardCreatedDate;
+
     private int boardHits;
 
     //file을 담을 수 있는 필드 만들기

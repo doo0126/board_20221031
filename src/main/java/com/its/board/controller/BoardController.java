@@ -1,6 +1,7 @@
 package com.its.board.controller;
 
 import com.its.board.dto.BoardDTO;
+import com.its.board.dto.PageDTO;
 import com.its.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,13 +40,30 @@ public class BoardController {
         model.addAttribute("boardList", boardDTOList);
         return "boardPages/boardList";
     }
+    @GetMapping("/paging")
+    public String paging(Model model , @RequestParam(value = "page",required = false ,defaultValue = "1") int page){
+        //값은 페이지 ,필수적이지 않다 기본값은 1
+        //하단 페이지 번호 표현을 위한 데이터
+        //페이징은 모든 목록을 싹 끌고오는게 아니다
+         List<BoardDTO> pagingList=boardService.pagingList(page);
+        PageDTO pageDTO =boardService.pagingParam(page);
+        model.addAttribute("boardList",pagingList);
+
+        model.addAttribute("paging",pageDTO);
+
+
+
+        return "boardPages/boardPaging";
+
+    }
 
     // 상세조회: /board?id=
     @GetMapping
-    public String findById(@RequestParam("id") Long id, Model model) {
+    public String findById(@RequestParam("id") Long id, Model model,@RequestParam(value = "page",required = false ,defaultValue = "1") int page) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
+        model.addAttribute("page",page);
         System.out.println("조회:boardDTO"+boardDTO);
         return "boardPages/boardDetail";
     }
@@ -83,6 +101,14 @@ public class BoardController {
 
         boardService.delete(id);
         return "redirect:/board/";
+    }
+// 검색
+    @GetMapping("/search")
+    public String search(@RequestParam("type") String type ,@RequestParam("q") String q , Model model){
+       List<BoardDTO> serachList =  boardService.search(type , q);
+        model.addAttribute("boardList",serachList);
+        return "boardPages/boardList";
+
     }
 
 

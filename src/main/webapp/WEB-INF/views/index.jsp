@@ -14,6 +14,7 @@
 <jsp:include page="layout/header.jsp" flush="false"></jsp:include>
 <a href="/board/save">글 작성</a>
 <a href="/board/">글 목록</a>
+<a href="/board/paging">페이징 목록</a>
 
 </body>
 </html>
